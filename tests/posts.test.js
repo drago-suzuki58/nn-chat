@@ -7,16 +7,19 @@ test('チャットメッセージに含まれる HTML タグがエスケープ�
   const html = pug.renderFile(
     './views/posts.pug',
     {
+      currentTheme: 'light',
       posts: [
         {
           id: 1,
           content: '<script>alert("XSS!");</script>',
-          postedBy: 'test_user',
+          userId: 1,
+          user: { username: 'test_user', isAdmin: false },
           createdAt: new Date(),
-          updatedAt: new Date(),
         },
       ],
-      user: 'test_user',
+      user: { id: 1, username: 'test_user', isAdmin: false },
+      csrfToken: 'token',
+      maxContentLength: 1000,
     },
   );
 
