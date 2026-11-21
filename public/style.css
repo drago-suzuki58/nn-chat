@@ -1,5 +1,8 @@
-.chat-page {
+.page {
   padding-top: 70px;
+  padding-bottom: 2rem;
+}
+.chat-page {
   padding-bottom: 200px;
 }
 :root {

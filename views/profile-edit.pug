@@ -1,0 +1,20 @@
+extends layout.pug
+
+block content
+  div.page
+    include navbar.pug
+    div.row.justify-content-center.my-3
+      div.col-12.col-md-8.col-lg-6
+        h2.h4.mb-3 プロフィールを編集
+        form(method="post" action="/profile/edit")
+          input(type="hidden" name="csrfToken" value=csrfToken)
+          div.mb-3
+            label.form-label(for="displayName") 表示名
+            input#displayName.form-control(type="text" name="displayName" maxlength=maxDisplayNameLength value=user.displayName placeholder=user.username)
+            div.form-text 空欄にするとユーザ名（@#{user.username}）で表示されます
+          div.mb-3
+            label.form-label(for="bio") 自己紹介
+            textarea#bio.form-control(name="bio" rows="5" maxlength=maxBioLength) #{user.bio || ''}
+          div.d-flex.justify-content-end.gap-2
+            a.btn.btn-outline-secondary(href=`/users/${user.username}`) キャンセル
+            button.btn.btn-primary(type="submit") 保存

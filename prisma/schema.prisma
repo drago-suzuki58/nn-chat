@@ -14,6 +14,8 @@ model User {
   id           Int       @id @default(autoincrement())
   username     String    @unique @db.VarChar(32)
   passwordHash String
+  displayName  String?   @db.VarChar(32)
+  bio          String?   @db.VarChar(500)
   isAdmin      Boolean   @default(false)
   createdAt    DateTime  @db.Timestamptz(6) @default(now())
   posts        Post[]

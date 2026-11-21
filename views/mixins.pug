@@ -1,0 +1,26 @@
+//- 表示名を大きく、なりすまし防止のためユーザ名を必ず併記する
+mixin userName(postUser)
+  a.text-reset.text-decoration-none(href=`/users/${postUser.username}`)
+    | #{postUser.displayName || postUser.username}
+    if postUser.isAdmin
+      i.bi-patch-check-fill.ms-1
+    small.text-body-secondary.fw-normal.ms-2 @#{postUser.username}
+
+mixin postCard(post, showDelete)
+  - const cardClass = (user.id === post.userId ? 'card my-3 border-primary' : 'card my-3')
+  div(class=cardClass)
+    div.card-body
+      div.d-flex.justify-content-between
+        h5.card-title
+          +userName(post.user)
+        - const tooltipTitle = `<small>${post.absoluteCreatedAt}</small>`
+        small.card-text.float-end(data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title=tooltipTitle) #{post.relativeCreatedAt}
+      p.card-text.lead #{post.content}
+    - const isDeletable = (showDelete && (user.id === post.userId || user.isAdmin))
+    if isDeletable
+      div.card-footer.d-flex.justify-content-end
+        form(method="post" action="/posts/delete")
+          input(type="hidden" name="id" value=post.id)
+          input(type="hidden" name="csrfToken" value=csrfToken)
+          button(type="submit").btn.btn-outline-danger.btn-sm
+            i.bi-trash

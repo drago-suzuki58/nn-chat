@@ -1,0 +1,24 @@
+extends layout.pug
+include mixins.pug
+
+block content
+  div.page
+    include navbar.pug
+    div.card.my-3
+      div.card-body
+        h2.card-title.h4
+          +userName(profileUser)
+        if profileUser.bio
+          p.card-text #{profileUser.bio}
+        else
+          p.card-text.text-body-secondary 自己紹介はまだありません
+        div.d-flex.justify-content-between.align-items-center
+          small.text-body-secondary #{joinedAt}に登録
+          if user.username === profileUser.username
+            a.btn.btn-outline-primary.btn-sm(href="/profile/edit") プロフィールを編集
+    h3.h6.mt-4 投稿 #{profileUser.posts.length} 件
+    each post in profileUser.posts
+      +postCard(post, false)
+
+block scripts
+  script(src="/nn-chat.js")

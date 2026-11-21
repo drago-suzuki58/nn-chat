@@ -3,8 +3,8 @@
 const { parseArgs } = require('node:util');
 const prisma = require('../lib/prisma');
 const { hashPassword } = require('../lib/password');
+const { usernamePattern } = require('../config');
 
-const usernamePattern = /^[A-Za-z0-9_-]{1,32}$/;
 const minPasswordLength = 8;
 
 async function main() {
